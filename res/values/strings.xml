@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Meterkast</string>
+    <string name="menu_settings">Instellingen</string>
+    <string name="button_record">Stand Opnemen</string>
+    <string name="button_options">Opties Aanpassen</string>
+    <string name="button_reset">RESET EVERYTHING</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="title_activity_stand_opname">Opnamescherm</string>
+    <string name="title_activity_optie_menu">Optiescherm</string>
+    
+    <string name="woonsituatie">Woonsituatie</string>
+    <string name="metersoort">Metersoort</string>
+    <string name="bewoners">Aantal bewoners</string>
+    
+    <string name="button_save">Opslaan</string>
+    <string name="button_cancel">Annuleren</string>
+    
+    <string name="los_huis">Losstaand huis</string>
+    <string name="rijtjeshuis">Rijtjeshuis</string>
+    <string name="appartement">Appartement</string>
+    
+    <string name="een_twee">Eén of twee</string>
+    <string name="drie_vijf">Drie tot vijf</string>
+    <string name="zes_meer">Zes of meer</string>
+    
+    <string name="enkele_stand">Enkele stand</string>
+    <string name="twee_standen">Dubbele stand</string>
+    <string name="anders_standen">Anders</string>
+    
+    <string name="welkom_bericht">Welkom! Er moeten eerst een paar opties worden geselecteerd.</string>
+    <string name="ok_knop">OK</string>    							
+    
+    
+
+</resources>

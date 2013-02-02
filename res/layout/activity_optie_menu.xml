@@ -1,0 +1,133 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OptieMenuActivity" >
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/button_save"
+        android:onClick="saveSettings" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/button_cancel"
+        android:onClick="goBack" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupWoonsituatie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true" >
+
+        <RadioButton
+            android:id="@+id/radioLosHuis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/los_huis" />
+
+        <RadioButton
+            android:id="@+id/radioRijtjesHuis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rijtjeshuis" />
+
+        <RadioButton
+            android:id="@+id/radioAppartement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/appartement" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/radioGroupWoonsituatie"
+        android:text="@string/bewoners"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupInwoners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/label"
+        android:layout_below="@+id/label" >
+
+        <RadioButton
+            android:id="@+id/radioEenOfTwee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/een_twee" />
+
+        <RadioButton
+            android:id="@+id/radioDrieTotVijf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drie_vijf" />
+
+        <RadioButton
+            android:id="@+id/radioZesOfMeer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zes_meer" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/radioGroupInwoners"
+        android:text="@string/metersoort"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupMeterSoort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" >
+
+        <RadioButton
+            android:id="@+id/radioEnkeleStand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/enkele_stand" />
+
+        <RadioButton
+            android:id="@+id/radioTweeStanden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/twee_standen" />
+
+        <!--  <RadioButton
+            android:id="@+id/radioAndereMeter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/anders_standen" /> -->
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/woonsituatie"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

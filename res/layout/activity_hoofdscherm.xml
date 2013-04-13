@@ -31,13 +31,33 @@
         android:text="@string/hello_world"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_remind"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:contentDescription="@string/picture_goeshere"
+        android:src="@drawable/grid" />
+
     <Button
-        android:id="@+id/button_reset"
+        android:id="@+id/button_remind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonToRecord"
-        android:layout_centerHorizontal="true"
-        android:onClick="reset"
-        android:text="@string/button_reset" />
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/buttonToRecord"
+        android:onClick="scheduleNotification"
+        android:text="@string/button_remind" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonToRecord"
+        android:layout_toLeftOf="@+id/button_remind"
+        android:onClick="shareSocialMedia"
+        android:text="Deel dit via social media" />
 
 </RelativeLayout>

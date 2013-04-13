@@ -11,31 +11,53 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int digi1=0x7f020000;
+        public static final int digi2=0x7f020001;
+        public static final int digi3=0x7f020002;
+        public static final int gas1=0x7f020003;
+        public static final int gas2=0x7f020004;
+        public static final int gas3=0x7f020005;
+        public static final int grid=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int meter1=0x7f020008;
+        public static final int meter2=0x7f020009;
+        public static final int meter3=0x7f02000a;
+        public static final int meter4=0x7f02000b;
+        public static final int meter5=0x7f02000c;
+        public static final int meter6=0x7f02000d;
+        public static final int meter7=0x7f02000e;
+        public static final int meter8=0x7f02000f;
+        public static final int numbersonblack=0x7f020010;
+        public static final int numbersonblackblur=0x7f020011;
+        public static final int numbersonwhite=0x7f020012;
+        public static final int numbersonwhiteblur=0x7f020013;
+        public static final int suggesties=0x7f020014;
     }
     public static final class id {
-        public static final int button1=0x7f070004;
-        public static final int button2=0x7f070005;
+        public static final int button1=0x7f070005;
+        public static final int button2=0x7f070006;
+        public static final int buttonTakePic=0x7f070016;
         public static final int buttonToOptions=0x7f070001;
         public static final int buttonToRecord=0x7f070000;
-        public static final int button_reset=0x7f070003;
-        public static final int editText1=0x7f070013;
+        public static final int button_remind=0x7f070004;
+        public static final int editText1=0x7f070015;
         public static final int editText2=0x7f070014;
-        public static final int label=0x7f07000a;
-        public static final int menu_settings=0x7f070015;
-        public static final int radioAppartement=0x7f070009;
-        public static final int radioDrieTotVijf=0x7f07000d;
-        public static final int radioEenOfTwee=0x7f07000c;
-        public static final int radioEnkeleStand=0x7f070011;
-        public static final int radioGroupInwoners=0x7f07000b;
-        public static final int radioGroupMeterSoort=0x7f070010;
-        public static final int radioGroupWoonsituatie=0x7f070006;
-        public static final int radioLosHuis=0x7f070007;
-        public static final int radioRijtjesHuis=0x7f070008;
-        public static final int radioTweeStanden=0x7f070012;
-        public static final int radioZesOfMeer=0x7f07000e;
+        public static final int imageView1=0x7f070003;
+        public static final int label=0x7f07000b;
+        public static final int menu_settings=0x7f070017;
+        public static final int radioAppartement=0x7f07000a;
+        public static final int radioDrieTotVijf=0x7f07000e;
+        public static final int radioEenOfTwee=0x7f07000d;
+        public static final int radioEnkeleStand=0x7f070012;
+        public static final int radioGroupInwoners=0x7f07000c;
+        public static final int radioGroupMeterSoort=0x7f070011;
+        public static final int radioGroupWoonsituatie=0x7f070007;
+        public static final int radioLosHuis=0x7f070008;
+        public static final int radioRijtjesHuis=0x7f070009;
+        public static final int radioTweeStanden=0x7f070013;
+        public static final int radioZesOfMeer=0x7f07000f;
         public static final int textView1=0x7f070002;
-        public static final int textView3=0x7f07000f;
+        public static final int textView3=0x7f070010;
     }
     public static final class layout {
         public static final int activity_hoofdscherm=0x7f030000;
@@ -48,30 +70,38 @@ public final class R {
         public static final int activity_stand_opname=0x7f060002;
     }
     public static final class string {
-        public static final int anders_standen=0x7f040015;
+        public static final int anders_standen=0x7f040018;
         public static final int app_name=0x7f040000;
-        public static final int appartement=0x7f04000f;
-        public static final int bewoners=0x7f04000a;
-        public static final int button_cancel=0x7f04000c;
+        public static final int appartement=0x7f040012;
+        public static final int bewoners=0x7f04000d;
+        public static final int button_cancel=0x7f04000f;
         public static final int button_options=0x7f040003;
         public static final int button_record=0x7f040002;
-        public static final int button_reset=0x7f040004;
-        public static final int button_save=0x7f04000b;
-        public static final int drie_vijf=0x7f040011;
-        public static final int een_twee=0x7f040010;
-        public static final int enkele_stand=0x7f040013;
+        public static final int button_remind=0x7f040004;
+        public static final int button_reset=0x7f040019;
+        public static final int button_save=0x7f04000e;
+        public static final int drie_vijf=0x7f040014;
+        public static final int een_twee=0x7f040013;
+        public static final int enkele_stand=0x7f040016;
         public static final int hello_world=0x7f040005;
-        public static final int los_huis=0x7f04000d;
+        public static final int los_huis=0x7f040010;
+        public static final int make_note=0x7f040006;
         public static final int menu_settings=0x7f040001;
-        public static final int metersoort=0x7f040009;
-        public static final int ok_knop=0x7f040017;
-        public static final int rijtjeshuis=0x7f04000e;
-        public static final int title_activity_optie_menu=0x7f040007;
-        public static final int title_activity_stand_opname=0x7f040006;
-        public static final int twee_standen=0x7f040014;
-        public static final int welkom_bericht=0x7f040016;
-        public static final int woonsituatie=0x7f040008;
-        public static final int zes_meer=0x7f040012;
+        public static final int metersoort=0x7f04000c;
+        public static final int ok_knop=0x7f04001f;
+        public static final int picture_goeshere=0x7f04001b;
+        public static final int rijtjeshuis=0x7f040011;
+        public static final int share_message=0x7f040009;
+        public static final int sharewindow_title=0x7f04000a;
+        public static final int stand1=0x7f04001c;
+        public static final int stand2=0x7f04001d;
+        public static final int take_pic=0x7f04001a;
+        public static final int title_activity_optie_menu=0x7f040008;
+        public static final int title_activity_stand_opname=0x7f040007;
+        public static final int twee_standen=0x7f040017;
+        public static final int welkom_bericht=0x7f04001e;
+        public static final int woonsituatie=0x7f04000b;
+        public static final int zes_meer=0x7f040015;
     }
     public static final class style {
         /** 

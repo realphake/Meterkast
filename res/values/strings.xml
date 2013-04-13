@@ -5,11 +5,15 @@
     <string name="menu_settings">Instellingen</string>
     <string name="button_record">Stand Opnemen</string>
     <string name="button_options">Opties Aanpassen</string>
-    <string name="button_reset">RESET EVERYTHING</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="button_remind">Maak herinnering voor morgen</string>
+    <string name="hello_world">Placeholder</string>
+    <string name="make_note">Herinnering aangemaakt</string>
+    
     
     <string name="title_activity_stand_opname">Opnamescherm</string>
     <string name="title_activity_optie_menu">Optiescherm</string>
+    <string name="share_message">Mijn stroomverbruik!</string>
+    <string name="sharewindow_title">Waarmee wil je dit delen?</string>
     
     <string name="woonsituatie">Woonsituatie</string>
     <string name="metersoort">Metersoort</string>
@@ -30,9 +34,14 @@
     <string name="twee_standen">Dubbele stand</string>
     <string name="anders_standen">Anders</string>
     
+    <string name="button_reset">Wis alle data (kijk uit!)</string>
+    
+    <string name="take_pic">Neem een foto</string>
+    <string name="picture_goeshere">Neem een foto van je meterstanden!</string>
+    <string name="stand1">Vul stand 1 in</string>
+    <string name="stand2">Vul stand 2 in</string>
+    
     <string name="welkom_bericht">Welkom! Er moeten eerst een paar opties worden geselecteerd.</string>
-    <string name="ok_knop">OK</string>    							
-    
-    
+    <string name="ok_knop">OK</string>
 
 </resources>

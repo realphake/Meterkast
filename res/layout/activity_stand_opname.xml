@@ -4,29 +4,6 @@
     android:layout_height="match_parent"
     tools:context=".StandOpnameActivity" >
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:inputType="number" >
-
-        <requestFocus />
-
-    </EditText>
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText1"
-        android:ems="10"
-        android:inputType="number" >
-    </EditText>
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -44,5 +21,49 @@
         android:layout_alignParentRight="true"
         android:text="@string/button_cancel"
         android:onClick="goBack" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/editText1"
+        android:inputType="number"
+        android:text="@string/stand2" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editText2"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/buttonTakePic"
+        android:ems="10"
+        android:inputType="number"
+        android:text="@string/stand1" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/buttonTakePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/editText1"
+        android:onClick="takePic"
+        android:text="@string/take_pic" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editText1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/picture_goeshere"
+        android:src="@drawable/suggesties" />
 
 </RelativeLayout>

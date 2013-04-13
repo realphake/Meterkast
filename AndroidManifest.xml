@@ -7,6 +7,9 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="16" />
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    
 
     <application
         android:allowBackup="true"
@@ -33,6 +36,9 @@
             android:screenOrientation="portrait"
             android:label="@string/title_activity_optie_menu" >
         </activity>
+        <service 
+            android:name="com.example.meterkast.NotificationService" >
+        </service>
     </application>
 
 </manifest>

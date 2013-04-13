@@ -114,11 +114,6 @@
             android:layout_height="wrap_content"
             android:text="@string/twee_standen" />
 
-        <!--  <RadioButton
-            android:id="@+id/radioAndereMeter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/anders_standen" /> -->
     </RadioGroup>
 
     <TextView
@@ -129,5 +124,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/woonsituatie"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    
 
 </RelativeLayout>

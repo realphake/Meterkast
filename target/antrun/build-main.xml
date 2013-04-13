@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <mkdir dir="target/classes"/>
+  <mkdir dir="gen"/>
+  <copy todir="C:\dev\workspace\Meterkast/libs">
+    <fileset dir="C:\dev\adt-bundle-windows-x86\sdk/extras/android/support/v4" includes="**/*.jar"/>
+  </copy>
+</target>
+</project>

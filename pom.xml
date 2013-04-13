@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                               http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.alliander.android.meterkast</groupId>
+	<artifactId>android.meterkast.app</artifactId>
+	<version>1.0</version>
+	<packaging>apk</packaging>
+	<name>Meterkast</name>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<sourceDirectory>src</sourceDirectory>
+		<pluginManagement>
+			<plugins>
+
+
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>3.4.0</version>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<configuration>
+					<sdk>
+						<!-- platform or api level (api level 4 = platform 1.6) -->
+						<platform>16</platform>
+					</sdk>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo>******** Displaying value of property	ANDROID_SDK_HOME********</echo>
+								<echo>${env.ANDROID_SDK_HOME}</echo>
+							</target>
+							<target>
+							  <mkdir dir="target/classes"/>
+							  <mkdir dir="gen"/>
+								<copy todir="${basedir}/libs">
+									<fileset dir="${env.ANDROID_SDK_HOME}${android.support.jar.location}" includes="**/*.jar" />
+								</copy>
+								
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.5.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/libs</outputDirectory>
+							<excludeTransitive>true</excludeTransitive>
+							<excludeScope>provided</excludeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<additionalConfig>
+						<file>
+							<name>.classpath</name>
+							<content>
+                              <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+                                         <classpath>
+                                           <classpathentry kind="src" path="src"/>
+                                           <classpathentry kind="src" path="gen"/>
+                                           <classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+                                           <classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+                                           <classpathentry kind="output" path="bin/classes"/>
+                                         </classpath>]]>
+							</content>
+						</file>
+					</additionalConfig>
+					<additionalBuildcommands>
+						<buildCommand>
+							<name>com.android.ide.eclipse.adt.ResourceManagerBuilder</name>
+						</buildCommand>
+						<buildCommand>
+							<name>com.android.ide.eclipse.adt.PreCompilerBuilder</name>
+						</buildCommand>
+						<buildCommand>
+							<name>org.eclipse.jdt.core.javabuilder</name>
+						</buildCommand>
+						<buildCommand>
+							<name>com.android.ide.eclipse.adt.ApkBuilder</name>
+						</buildCommand>
+					</additionalBuildcommands>
+					<additionalProjectnatures>
+						<projectnature>com.android.ide.eclipse.adt.AndroidNature</projectnature>
+						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
+					</additionalProjectnatures>
+
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<version>4.1.1.4</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	  <properties>
+     <android.support.jar.location>/extras/android/support/v4</android.support.jar.location>
+     <cordova.version>2.2.0</cordova.version>
+  </properties>
+</project>

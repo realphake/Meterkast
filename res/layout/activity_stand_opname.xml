@@ -30,7 +30,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/editText1"
         android:inputType="number"
-        android:text="@string/stand2" />
+        android:hint="@string/stand2" />
 
     <EditText
         android:id="@+id/editText1"
@@ -41,7 +41,7 @@
         android:layout_toLeftOf="@+id/buttonTakePic"
         android:ems="10"
         android:inputType="number"
-        android:text="@string/stand1" >
+        android:hint="@string/stand1" >
 
         <requestFocus />
     </EditText>

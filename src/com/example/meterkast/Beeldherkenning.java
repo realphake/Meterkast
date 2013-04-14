@@ -678,28 +678,6 @@ public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
         return result;
     }
 
-    private List<Integer> numberEdgeLogicNew(boolean LUedge, boolean RUedge, boolean LDedge, boolean RDedge, boolean MUedge,
-        boolean MMedge, boolean MDedge) {
-        List<Integer> resultList = new ArrayList<Integer>();
-        resultList.add(Integer.valueOf(0));
-        resultList.add(Integer.valueOf(1));
-        resultList.add(Integer.valueOf(2));
-        resultList.add(Integer.valueOf(3));
-        resultList.add(Integer.valueOf(4));
-        resultList.add(Integer.valueOf(5));
-        resultList.add(Integer.valueOf(6));
-        resultList.add(Integer.valueOf(7));
-        resultList.add(Integer.valueOf(8));
-        resultList.add(Integer.valueOf(9));
-
-        if (LUedge && LDedge && RUedge && RDedge) {
-            resultList.add(Integer.valueOf(0));
-            resultList.add(Integer.valueOf(8));
-        }
-
-        return resultList;
-    }
-
     private List<Integer> numberEdgeLogic(boolean LUedge, boolean RUedge, boolean LDedge, boolean RDedge, boolean MUedge,
         boolean MMedge, boolean MDedge) {
         List<Integer> resultList = new ArrayList<Integer>();

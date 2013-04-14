@@ -2,8 +2,6 @@ package com.example.meterkast;
 
 import android.app.Activity;
 
-import android.content.SharedPreferences;
-
 import android.os.Bundle;
 
 import android.view.View;
@@ -15,7 +13,8 @@ import android.widget.RadioGroup;
  * @author Arjen Swellengrebel
  */
 public class OptieMenuActivity extends Activity {
-    SharedPreferences settings;
+    
+    StandData data;
     RadioGroup groupWoonSit;
     RadioGroup groupInw;
     RadioGroup groupMeetS;
@@ -32,12 +31,12 @@ public class OptieMenuActivity extends Activity {
         this.groupInw = (RadioGroup) findViewById(R.id.radioGroupInwoners);
         this.groupMeetS = (RadioGroup) findViewById(R.id.radioGroupMeterSoort);
 
-        this.settings = getSharedPreferences("PersonalInfo", MODE_PRIVATE); // Open settings file.
-
+        this.data = new StandData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
+        
         // Set the RadioGroups to the values recorded in the PersonalInfo file.
-        this.groupWoonSit.check(this.settings.getInt("Woonsituatie", -1));
-        this.groupInw.check(this.settings.getInt("Inwoneraantal", -1));
-        this.groupMeetS.check(this.settings.getInt("Metersoort", -1));
+        this.groupWoonSit.check(data.getSelection("Woonsituatie"));
+        this.groupInw.check(data.getSelection("Inwoneraantal"));
+        this.groupMeetS.check(data.getSelection("Metersoort"));
     }
 
     /**
@@ -55,15 +54,7 @@ public class OptieMenuActivity extends Activity {
      * @param view
      */
     public void saveSettings(View view) {
-        // Create an editor object for writing to the settings file.
-        SharedPreferences.Editor editor = this.settings.edit();
-
-        // And enter their selected values into the editor.
-        editor.putInt("Woonsituatie", this.groupWoonSit.getCheckedRadioButtonId());
-        editor.putInt("Inwoneraantal", this.groupInw.getCheckedRadioButtonId());
-        editor.putInt("Metersoort", this.groupMeetS.getCheckedRadioButtonId());
-
-        editor.commit(); // Commit the edits.
+        data.recordSettings(groupWoonSit, groupInw, groupMeetS);
         super.onBackPressed(); // After saving, close the window.
     }
 }

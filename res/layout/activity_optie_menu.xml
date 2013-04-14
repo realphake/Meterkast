@@ -58,33 +58,6 @@
         android:text="@string/bewoners"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <RadioGroup
-        android:id="@+id/radioGroupInwoners"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/label"
-        android:layout_below="@+id/label" >
-
-        <RadioButton
-            android:id="@+id/radioEenOfTwee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/een_twee" />
-
-        <RadioButton
-            android:id="@+id/radioDrieTotVijf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/drie_vijf" />
-
-        <RadioButton
-            android:id="@+id/radioZesOfMeer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zes_meer" />
-    </RadioGroup>
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -125,6 +98,40 @@
         android:text="@string/woonsituatie"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:onClick="switchUser"
+        android:text="@string/switchuser" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupInwoners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/label" >
+
+        <RadioButton
+            android:id="@+id/radioEenOfTwee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/een_twee" />
+
+        <RadioButton
+            android:id="@+id/radioDrieTotVijf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drie_vijf" />
+
+        <RadioButton
+            android:id="@+id/radioZesOfMeer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zes_meer" />
+    </RadioGroup>
 
 </RelativeLayout>

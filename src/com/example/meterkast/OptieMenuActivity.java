@@ -34,9 +34,9 @@ public class OptieMenuActivity extends Activity {
         this.data = new StandData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
         
         // Set the RadioGroups to the values recorded in the PersonalInfo file.
-        this.groupWoonSit.check(data.getSelection("Woonsituatie"));
-        this.groupInw.check(data.getSelection("Inwoneraantal"));
-        this.groupMeetS.check(data.getSelection("Metersoort"));
+        this.groupWoonSit.check(data.getSettingSelection("Woonsituatie"));
+        this.groupInw.check(data.getSettingSelection("Inwoneraantal"));
+        this.groupMeetS.check(data.getSettingSelection("Metersoort"));
     }
 
     /**
@@ -46,6 +46,10 @@ public class OptieMenuActivity extends Activity {
      */
     public void goBack(View view) {
         super.onBackPressed(); // Simulates pressing the phone's back key.
+    }
+    
+    public void switchUser(View view) {
+    	data.switchUser();
     }
 
     /**

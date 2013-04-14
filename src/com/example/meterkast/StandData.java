@@ -24,7 +24,7 @@ public class StandData {
 	}
 	
 	public boolean enkeleStand() {
-		return settings.getInt("Metersoort", -1) == R.id.radioEnkeleStand;
+		return settings.getInt("Metersoort"+getCurrentUser(), -1) == R.id.radioEnkeleStand;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class StandData {
     File getRelevantPhotoPath() {
         // Create a file in the following steps:
         // Determine the filename for this one, such as "3pict.jpg" (where 3 is the number of the next (this) recording)
-        String numPict = Integer.valueOf(settings.getInt("nOfRecords", 0) + 1).toString() + "pict.jpg";
+        String numPict = Integer.valueOf(settings.getInt("nOfRecords"+getCurrentUser(), 0) + 1).toString() + "pict"+getCurrentUser()+".jpg";
 
         // Create the directory like "/sdcard/meterkast_foto/" if it doesn't exist yet
         new File(Environment.getExternalStorageDirectory() + "/meterkast_foto/").mkdirs();
@@ -48,19 +48,19 @@ public class StandData {
     }
     
     public long getStartDate() {
-    	return recordings.getLong("1date", -1);
+    	return recordings.getLong("1date"+getCurrentUser(), -1);
     }
     
     public Bitmap drawGraph(int width, int height, Bitmap graph) {
 
-        int noRecs = settings.getInt("nOfRecords", 0);
+        int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), 0);
 
         int highestRecorded = 0;
         int lowestRecorded = 999999 * 2;
 
         for (int i = 1; i <= noRecs; i++) {
-            int thisRecordingFRST = recordings.getInt(i + "frst", -1);
-            int thisRecordingSCND = recordings.getInt(i + "scnd", -1);
+            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), -1);
+            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), -1);
 
             if (thisRecordingFRST + thisRecordingSCND > highestRecorded) {
                 highestRecorded = thisRecordingFRST + thisRecordingSCND;
@@ -75,20 +75,20 @@ public class StandData {
             }
         }
 
-        long startTime = recordings.getLong("1date", -1);
-        long endTime = recordings.getLong(Integer.valueOf(noRecs).toString() + "date", -1);
+        long startTime = recordings.getLong("1date"+getCurrentUser(), -1);
+        long endTime = recordings.getLong(Integer.valueOf(noRecs).toString() + "date"+getCurrentUser(), -1);
 
         int previousTime = 0;
         int duration = (int) endTime - (int) startTime;
         double recordingSpan = highestRecorded - lowestRecorded;
 
         for (int i = 2; i <= noRecs; i++) {
-            int thisTime = (int) (recordings.getLong(i + "date", -1) - startTime);
-            int thisRecordingFRST = recordings.getInt(i + "frst", -1);
-            int thisRecordingSCND = recordings.getInt(i + "scnd", -1);
+            int thisTime = (int) (recordings.getLong(i + "date"+getCurrentUser(), -1) - startTime);
+            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), -1);
+            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), -1);
             int iPrev = (i - 1);
-            int previousRecordingFRST = recordings.getInt(iPrev + "frst", -1);
-            int previousRecordingSCND = recordings.getInt(iPrev + "scnd", -1);
+            int previousRecordingFRST = recordings.getInt(iPrev + "frst"+getCurrentUser(), -1);
+            int previousRecordingSCND = recordings.getInt(iPrev + "scnd"+getCurrentUser(), -1);
 
             double previousWidthFraction = ((double) previousTime / (double) duration);
             double thisWidthFraction = ((double) thisTime / (double) duration);
@@ -138,7 +138,7 @@ public class StandData {
         SharedPreferences.Editor editorSettings = settings.edit();
 
         // Counting the recordings, we need the next one so + 1
-        Integer recordNumber = Integer.valueOf(settings.getInt("nOfRecords", 0) + 1);
+        Integer recordNumber = Integer.valueOf(settings.getInt("nOfRecords"+getCurrentUser(), 0) + 1);
 
         /** Recordings will look like this:
          * "3date" => 39485093218475 (milliseconds since epoch)
@@ -153,23 +153,23 @@ public class StandData {
             // Enter the recorded info into the "editor" (which is the file "MeterInfo.whatever").
             long currentTime = System.currentTimeMillis();
 
-            editor.putLong(recordNumber.toString() + "date", currentTime);
+            editor.putLong(recordNumber.toString() + "date"+getCurrentUser(), currentTime);
             
             // editor.putLong(recordNumber.toString() + "date", System.currentTimeMillis());
-            editor.putInt(recordNumber.toString() + "frst", Integer.parseInt(field1));
+            editor.putInt(recordNumber.toString() + "frst"+getCurrentUser(), Integer.parseInt(field1));
 
             /** Record the second field, if necessary. */
             if (!field2.equals("")
-                    && settings.getInt("Metersoort", -1) == R.id.radioTweeStanden) {
+                    && settings.getInt("Metersoort"+getCurrentUser(), -1) == R.id.radioTweeStanden) {
                 // Enter the recorded info into the "editor" (which is the file "MeterInfo.whatever").
-                editor.putInt(recordNumber.toString() + "scnd", Integer.parseInt(field2));
+                editor.putInt(recordNumber.toString() + "scnd"+getCurrentUser(), Integer.parseInt(field2));
 
                 // We have to remember how many settings have been recorded now!
-                editorSettings.putInt("nOfRecords", recordNumber.intValue());
+                editorSettings.putInt("nOfRecords"+getCurrentUser(), recordNumber.intValue());
             }
 
             // We have to remember how many settings have been recorded now!
-            editorSettings.putInt("nOfRecords", recordNumber.intValue());
+            editorSettings.putInt("nOfRecords"+getCurrentUser(), recordNumber.intValue());
         } else {
             Toast.makeText(context, "Incompleet ingevuld!", Toast.LENGTH_SHORT).show();
         }
@@ -179,12 +179,12 @@ public class StandData {
 	}
 
 	public long getEndDate() {
-		int noRecs = settings.getInt("nOfRecords", 0);
-		return recordings.getLong(Integer.valueOf(noRecs).toString() + "date", -1);
+		int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), 0);
+		return recordings.getLong(Integer.valueOf(noRecs).toString() + "date"+getCurrentUser(), -1);
 	}
 
 	public Bitmap drawBarGraphs(int width, int height, Bitmap graph) {
-		int noRecs = settings.getInt("nOfRecords", 0);
+		int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), 0);
         long startTime = getStartDate();
         long endTime = getEndDate();
         long duration = endTime - startTime;
@@ -193,8 +193,8 @@ public class StandData {
         int highestRecorded = 0;
 
         for (int i = 1; i <= noRecs; i++) {
-            int thisRecordingFRST = recordings.getInt(i + "frst", -1);
-            int thisRecordingSCND = recordings.getInt(i + "scnd", -1);
+            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), -1);
+            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), -1);
 
             if (thisRecordingFRST + thisRecordingSCND > highestRecorded) {
                 highestRecorded = thisRecordingFRST + thisRecordingSCND;
@@ -224,13 +224,13 @@ public class StandData {
 	}
 	
 	private int thisDaysUsage(long morning, long evening) {
-        int noRecs = settings.getInt("nOfRecords", 0);
+        int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), 0);
         long thisDate;
         int beforeMorning = -1;
         int afterEvening = -1;
 
         for (int recording = 2; recording <= noRecs; recording += 1) {
-            thisDate = recordings.getLong(recording + "date", -1);
+            thisDate = recordings.getLong(recording + "date"+getCurrentUser(), -1);
 
             if (beforeMorning == -1 && morning < thisDate) {
                 beforeMorning = recording - 1;
@@ -246,12 +246,12 @@ public class StandData {
         }
 
         long millisInDay = 1000 * 60 * 60 * 24;
-        long millisBetweenRecs = recordings.getLong(afterEvening + "date", -1)
-            - recordings.getLong(beforeMorning + "date", -1);
-        int usageBetwRecsFRST = recordings.getInt(afterEvening + "frst", -1)
-            - recordings.getInt(beforeMorning + "frst", -1);
-        int usageBetwRecsSCND = recordings.getInt(afterEvening + "scnd", -1)
-            - recordings.getInt(beforeMorning + "scnd", -1);
+        long millisBetweenRecs = recordings.getLong(afterEvening + "date"+getCurrentUser(), -1)
+            - recordings.getLong(beforeMorning + "date"+getCurrentUser(), -1);
+        int usageBetwRecsFRST = recordings.getInt(afterEvening + "frst"+getCurrentUser(), -1)
+            - recordings.getInt(beforeMorning + "frst"+getCurrentUser(), -1);
+        int usageBetwRecsSCND = recordings.getInt(afterEvening + "scnd"+getCurrentUser(), -1)
+            - recordings.getInt(beforeMorning + "scnd"+getCurrentUser(), -1);
         int usageBetweenRecs = usageBetwRecsFRST + usageBetwRecsSCND;
         int usageThisDay = (int) ((double) (millisInDay / millisBetweenRecs) * usageBetweenRecs);
 
@@ -260,12 +260,13 @@ public class StandData {
 
 	public int getRecording(int i, String string) {
 		String iS = Integer.valueOf(i).toString();
-		return recordings.getInt(iS + string, -1);
+		return recordings.getInt(iS+string+getCurrentUser(), -1);
 	}
 
 	public boolean everyOptionIsSet() {
-		return settings.getInt("Woonsituatie", -1) == -1 || settings.getInt("Inwoneraantal", -1) == -1
-                || settings.getInt("Metersoort", -1) == -1;
+		return settings.getInt("Woonsituatie"+getCurrentUser(), -1) == -1 
+				|| settings.getInt("Inwoneraantal"+getCurrentUser(), -1) == -1
+                || settings.getInt("Metersoort"+getCurrentUser(), -1) == -1;
 	}
 
 	public void recordSettings(RadioGroup groupWoonSit, RadioGroup groupInw, RadioGroup groupMeetS) {
@@ -273,15 +274,34 @@ public class StandData {
         SharedPreferences.Editor editor = settings.edit();
 
         // And enter their selected values into the editor.
-        editor.putInt("Woonsituatie", groupWoonSit.getCheckedRadioButtonId());
-        editor.putInt("Inwoneraantal", groupInw.getCheckedRadioButtonId());
-        editor.putInt("Metersoort", groupMeetS.getCheckedRadioButtonId());
+        editor.putInt("Woonsituatie"+getCurrentUser(), groupWoonSit.getCheckedRadioButtonId());
+        editor.putInt("Inwoneraantal"+getCurrentUser(), groupInw.getCheckedRadioButtonId());
+        editor.putInt("Metersoort"+getCurrentUser(), groupMeetS.getCheckedRadioButtonId());
 
         editor.commit(); // Commit the edits.
 		
 	}
 
-	public int getSelection(String string) {
-		return settings.getInt(string, -1);
+	public int getSettingSelection(String string) {
+		return settings.getInt(string+getCurrentUser(), -1);
+	}
+	
+	/**
+	 * The app can take two different users. The one is denoted as 1, the other as -1.
+	 * If no recording has been made yet, the current user is 1.
+	 */
+	public int getCurrentUser() {
+		int userSetting = settings.getInt( "User", 0 );
+		if ( userSetting == 0 ) {
+			return 1;
+		}
+		else return userSetting;
+	}
+
+	public void switchUser() {
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putInt( "User", -getCurrentUser() );
+		editor.commit();
+		
 	}
 }

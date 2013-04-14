@@ -111,8 +111,7 @@ public class Hoofdscherm extends Activity {
      * Called when the window becomes active. Shows some info about previous recordings.
      */
     private void showRecordings() {
-
-        this.textView1.setText("");
+        this.textView1.setText("User# "+data.getCurrentUser());
     }
 
     /**

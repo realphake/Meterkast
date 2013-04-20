@@ -31,10 +31,10 @@ import java.io.FileOutputStream;
  *
  * @author Arjen Swellengrebel
  */
-public class Hoofdscherm extends Activity {
+public class MainScreen extends Activity {
     private static final int QUALITY = 100;
-	private static final int HEIGHT = 480;
-	private static final int WIDTH = 640;
+	private static final int HEIGHT = 480; // Height of the graph that displays your usage.
+	private static final int WIDTH = 640;// And width of same.
 	// Global variables.
     TextView textView1;
     ImageView imageView1;
@@ -49,7 +49,9 @@ public class Hoofdscherm extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoofdscherm);
 
-        this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
+        // Initialize the main way we'll communicate with the settings.
+        this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), 
+        		getSharedPreferences("MeterInfo", MODE_PRIVATE));
         
         this.textView1 = (TextView) findViewById(R.id.textView1);
         this.imageView1 = (ImageView) findViewById(R.id.imageView1);
@@ -84,25 +86,26 @@ public class Hoofdscherm extends Activity {
         super.onResume();
 
         // Then add the following functions to that code:
-        showRecordings();
-        drawBarGraphs();
+        showCurrentUser();
+        drawBarGraphs(); // Look at the functions to see what they do
         graphRecordings();
     }
 
+    // Draws a graph of the electricity usage over time. 
     private void drawBarGraphs() {
     	Bitmap graph = BitmapFactory.decodeResource(getResources(), R.drawable.grid);
         graph = Bitmap.createScaledBitmap(graph, WIDTH, HEIGHT, false);
-    	
+    	// I just make the data do it right now; it has access to the necessary data to do it.
     	graph = data.drawBarGraphs(WIDTH, HEIGHT, graph);
         this.imageView1.setImageBitmap(graph);
     }
 
     
-
+    // Draws bar graphs on the picture being displayed. These graphs are SUPER USEFUL.
     private void graphRecordings() {
     	Bitmap graph = BitmapFactory.decodeResource(getResources(), R.drawable.grid);
         graph = Bitmap.createScaledBitmap(graph, WIDTH, HEIGHT, false);
-        graph = data.drawGraph(WIDTH, HEIGHT, graph);
+        graph = data.drawGraph(WIDTH, HEIGHT, graph); // Make data do it, because it has all the information for that.
 
         this.imageView1.setImageBitmap(graph);
     }
@@ -110,7 +113,7 @@ public class Hoofdscherm extends Activity {
     /**
      * Called when the window becomes active. Shows some info about previous recordings.
      */
-    private void showRecordings() {
+    private void showCurrentUser() {
         this.textView1.setText("User# "+data.getCurrentUser());
     }
 
@@ -140,39 +143,41 @@ public class Hoofdscherm extends Activity {
      * @param view
      */
     public void scheduleNotification(View view) {
-        startService(new Intent(this, NotificationService.class));
+        startService(new Intent(this, NotificationService.class)); // Just refers to the class I made for that.
     }
 
     /**
-     * @param view
+     * Shares the picture of the graph on any social media, like facebook or twitter.
      */
     public void shareSocialMedia(View view) {
         new File(Environment.getExternalStorageDirectory() + "/meterkast_foto/").mkdirs();
 
+        // First I save the (temporary) picture too disk so I can refer to it.
         String toShare = Environment.getExternalStorageDirectory().getAbsolutePath() + "/meterkast_foto/shareGraph.jpg";
-
         View content = findViewById(R.id.imageView1);
         content.setDrawingCacheEnabled(true);
-
         Bitmap bitmap = content.getDrawingCache();
-        File file = new File(toShare);
+        File file = new File(toShare); // Create a file type to save to (in a moment)
 
+        // This may fail, but it really shouldn't. It's just Java being a stickler for exceptions.
         try {
             file.createNewFile();
-
             FileOutputStream ostream = new FileOutputStream(file);
-            bitmap.compress(CompressFormat.JPEG, QUALITY, ostream);
+            bitmap.compress(CompressFormat.JPEG, QUALITY, ostream); // Actually save the image in the file!
             ostream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // This throws away info if it does crash, but whatevs guys!
         }
 
+        // Setting up for sharing.
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");
 
+        // This is why I saved the image to file just now. The share intent needs a URI, not an actual picture.
         share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + toShare));
-        share.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message));
+        share.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message)); // And a quick optional message.
 
+        // And SHARE!
         startActivity(Intent.createChooser(share, getString(R.string.sharewindow_title)));
     }
 }

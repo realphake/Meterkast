@@ -31,7 +31,7 @@ import java.io.File;
  * @author Arjen Swellengrebel
  */
 public class MakeRecordingActivity extends Activity {
-    private static final int SAMPLESIZE = 8;
+    private static final int SAMPLESIZE = 8; // This reduces the image size if it can't be loaded.
 	RecordingData data;
 	EditText editText1, editText2;
     ImageView imageView1;
@@ -41,7 +41,9 @@ public class MakeRecordingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stand_opname);
         
-        this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
+        // This initializes the object that we use to read stuff from the settings files.
+        this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), 
+        		getSharedPreferences("MeterInfo", MODE_PRIVATE));
 
         
 

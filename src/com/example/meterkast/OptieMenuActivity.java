@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
  */
 public class OptieMenuActivity extends Activity {
     
+	// Making some constants of these strings so I can keep referring to them.
     private static final String METERTYPE = "Metersoort";
 	private static final String NUMBEROCCUPANTS = "Inwoneraantal";
 	private static final String TYPEOFHOUSE = "Woonsituatie";
@@ -52,7 +53,7 @@ public class OptieMenuActivity extends Activity {
     }
     
     public void switchUser(View view) {
-    	data.switchUser();
+    	data.switchUser(); // Just refers to the data Object! Which is useful! Look there for the code.
     }
 
     /**

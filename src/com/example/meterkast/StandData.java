@@ -15,6 +15,12 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class StandData {
+	private static final int MILLISINADAY = 1000 * 60 * 60 * 24;
+	private static final int BOTTOMTEXTDISTANCE = 10;
+	private static final int TOPTEXTDISTANCE = 30;
+	private static final int HIGHESTPOSSIBLERECORDING = 999999 * 2;
+	private static final int HASNORECORDINGYET = 0;
+	private static final int HASNOTBEENRECORDED = -1;
 	public SharedPreferences recordings;
 	public SharedPreferences settings;
 
@@ -24,7 +30,7 @@ public class StandData {
 	}
 	
 	public boolean enkeleStand() {
-		return settings.getInt("Metersoort"+getCurrentUser(), -1) == R.id.radioEnkeleStand;
+		return settings.getInt("Metersoort"+getCurrentUser(), HASNOTBEENRECORDED) == R.id.radioEnkeleStand;
 	}
 	
 	/**
@@ -36,7 +42,7 @@ public class StandData {
     File getRelevantPhotoPath() {
         // Create a file in the following steps:
         // Determine the filename for this one, such as "3pict.jpg" (where 3 is the number of the next (this) recording)
-        String numPict = Integer.valueOf(settings.getInt("nOfRecords"+getCurrentUser(), 0) + 1).toString() + "pict"+getCurrentUser()+".jpg";
+        String numPict = Integer.valueOf(settings.getInt("nOfRecords"+getCurrentUser(), HASNORECORDINGYET) + 1).toString() + "pict"+getCurrentUser()+".jpg";
 
         // Create the directory like "/sdcard/meterkast_foto/" if it doesn't exist yet
         new File(Environment.getExternalStorageDirectory() + "/meterkast_foto/").mkdirs();
@@ -48,19 +54,19 @@ public class StandData {
     }
     
     public long getStartDate() {
-    	return recordings.getLong("1date"+getCurrentUser(), -1);
+    	return recordings.getLong("1date"+getCurrentUser(), HASNOTBEENRECORDED);
     }
     
     public Bitmap drawGraph(int width, int height, Bitmap graph) {
 
-        int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), 0);
+        int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), HASNOTBEENRECORDED);
 
         int highestRecorded = 0;
-        int lowestRecorded = 999999 * 2;
+        int lowestRecorded = HIGHESTPOSSIBLERECORDING;
 
         for (int i = 1; i <= noRecs; i++) {
-            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), -1);
-            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), -1);
+            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), HASNOTBEENRECORDED);
+            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), HASNOTBEENRECORDED);
 
             if (thisRecordingFRST + thisRecordingSCND > highestRecorded) {
                 highestRecorded = thisRecordingFRST + thisRecordingSCND;
@@ -75,20 +81,20 @@ public class StandData {
             }
         }
 
-        long startTime = recordings.getLong("1date"+getCurrentUser(), -1);
-        long endTime = recordings.getLong(Integer.valueOf(noRecs).toString() + "date"+getCurrentUser(), -1);
+        long startTime = recordings.getLong("1date"+getCurrentUser(), HASNOTBEENRECORDED);
+        long endTime = recordings.getLong(Integer.valueOf(noRecs).toString() + "date"+getCurrentUser(), HASNOTBEENRECORDED);
 
         int previousTime = 0;
         int duration = (int) endTime - (int) startTime;
         double recordingSpan = highestRecorded - lowestRecorded;
 
         for (int i = 2; i <= noRecs; i++) {
-            int thisTime = (int) (recordings.getLong(i + "date"+getCurrentUser(), -1) - startTime);
-            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), -1);
-            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), -1);
+            int thisTime = (int) (recordings.getLong(i + "date"+getCurrentUser(), HASNOTBEENRECORDED) - startTime);
+            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), HASNOTBEENRECORDED);
+            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), HASNOTBEENRECORDED);
             int iPrev = (i - 1);
-            int previousRecordingFRST = recordings.getInt(iPrev + "frst"+getCurrentUser(), -1);
-            int previousRecordingSCND = recordings.getInt(iPrev + "scnd"+getCurrentUser(), -1);
+            int previousRecordingFRST = recordings.getInt(iPrev + "frst"+getCurrentUser(), HASNOTBEENRECORDED);
+            int previousRecordingSCND = recordings.getInt(iPrev + "scnd"+getCurrentUser(), HASNOTBEENRECORDED);
 
             double previousWidthFraction = ((double) previousTime / (double) duration);
             double thisWidthFraction = ((double) thisTime / (double) duration);
@@ -124,8 +130,8 @@ public class StandData {
             p.setColor(Color.RED);
             p.setTextSize(30);
             p.setTextAlign(Align.CENTER);
-            canvas.drawText(Integer.toString(highestRecorded), width / 2, 0 + 30, p);
-            canvas.drawText(Integer.toString(lowestRecorded), width / 2, height - 10, p);
+            canvas.drawText(Integer.toString(highestRecorded), width / 2, TOPTEXTDISTANCE, p);
+            canvas.drawText(Integer.toString(lowestRecorded), width / 2, height - BOTTOMTEXTDISTANCE, p);
 
             previousTime = thisTime;
         }
@@ -160,7 +166,7 @@ public class StandData {
 
             /** Record the second field, if necessary. */
             if (!field2.equals("")
-                    && settings.getInt("Metersoort"+getCurrentUser(), -1) == R.id.radioTweeStanden) {
+                    && settings.getInt("Metersoort"+getCurrentUser(), HASNOTBEENRECORDED) == R.id.radioTweeStanden) {
                 // Enter the recorded info into the "editor" (which is the file "MeterInfo.whatever").
                 editor.putInt(recordNumber.toString() + "scnd"+getCurrentUser(), Integer.parseInt(field2));
 
@@ -180,7 +186,7 @@ public class StandData {
 
 	public long getEndDate() {
 		int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), 0);
-		return recordings.getLong(Integer.valueOf(noRecs).toString() + "date"+getCurrentUser(), -1);
+		return recordings.getLong(Integer.valueOf(noRecs).toString() + "date"+getCurrentUser(), HASNOTBEENRECORDED);
 	}
 
 	public Bitmap drawBarGraphs(int width, int height, Bitmap graph) {
@@ -188,13 +194,12 @@ public class StandData {
         long startTime = getStartDate();
         long endTime = getEndDate();
         long duration = endTime - startTime;
-        long millisInADay = (1000 * 60 * 60 * 24);
-        int totalDays = (int) (duration / millisInADay);
+        int totalDays = (int) (duration / MILLISINADAY);
         int highestRecorded = 0;
 
         for (int i = 1; i <= noRecs; i++) {
-            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), -1);
-            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), -1);
+            int thisRecordingFRST = recordings.getInt(i + "frst"+getCurrentUser(), HASNOTBEENRECORDED);
+            int thisRecordingSCND = recordings.getInt(i + "scnd"+getCurrentUser(), HASNOTBEENRECORDED);
 
             if (thisRecordingFRST + thisRecordingSCND > highestRecorded) {
                 highestRecorded = thisRecordingFRST + thisRecordingSCND;
@@ -202,8 +207,8 @@ public class StandData {
         }
 
         for (int day = 0; day < totalDays; day += 1) {
-            long morning = startTime + (day * millisInADay);
-            long evening = startTime + (day + 1) * millisInADay;
+            long morning = startTime + (day * MILLISINADAY);
+            long evening = startTime + (day + 1) * MILLISINADAY;
             int usage = thisDaysUsage(morning, evening);
 
             double morningWidthFraction = ((double) morning / (double) duration);
@@ -226,47 +231,46 @@ public class StandData {
 	private int thisDaysUsage(long morning, long evening) {
         int noRecs = settings.getInt("nOfRecords"+getCurrentUser(), 0);
         long thisDate;
-        int beforeMorning = -1;
-        int afterEvening = -1;
+        int beforeMorning = 0;
+        int afterEvening = 0;
 
         for (int recording = 2; recording <= noRecs; recording += 1) {
-            thisDate = recordings.getLong(recording + "date"+getCurrentUser(), -1);
+            thisDate = recordings.getLong(recording + "date"+getCurrentUser(), HASNOTBEENRECORDED);
 
-            if (beforeMorning == -1 && morning < thisDate) {
+            if (beforeMorning == 0 && morning < thisDate) {
                 beforeMorning = recording - 1;
             }
 
-            if (afterEvening == -1 && evening < thisDate) {
+            if (afterEvening == 0 && evening < thisDate) {
                 afterEvening = recording;
             }
 
-            if (afterEvening != -1 && beforeMorning != -1) {
+            if (afterEvening != 0 && beforeMorning != 0) {
                 break;
             }
         }
 
-        long millisInDay = 1000 * 60 * 60 * 24;
-        long millisBetweenRecs = recordings.getLong(afterEvening + "date"+getCurrentUser(), -1)
-            - recordings.getLong(beforeMorning + "date"+getCurrentUser(), -1);
-        int usageBetwRecsFRST = recordings.getInt(afterEvening + "frst"+getCurrentUser(), -1)
-            - recordings.getInt(beforeMorning + "frst"+getCurrentUser(), -1);
-        int usageBetwRecsSCND = recordings.getInt(afterEvening + "scnd"+getCurrentUser(), -1)
-            - recordings.getInt(beforeMorning + "scnd"+getCurrentUser(), -1);
+        long millisBetweenRecs = recordings.getLong(afterEvening + "date"+getCurrentUser(), HASNOTBEENRECORDED)
+            - recordings.getLong(beforeMorning + "date"+getCurrentUser(), HASNOTBEENRECORDED);
+        int usageBetwRecsFRST = recordings.getInt(afterEvening + "frst"+getCurrentUser(), HASNOTBEENRECORDED)
+            - recordings.getInt(beforeMorning + "frst"+getCurrentUser(), HASNOTBEENRECORDED);
+        int usageBetwRecsSCND = recordings.getInt(afterEvening + "scnd"+getCurrentUser(), HASNOTBEENRECORDED)
+            - recordings.getInt(beforeMorning + "scnd"+getCurrentUser(), HASNOTBEENRECORDED);
         int usageBetweenRecs = usageBetwRecsFRST + usageBetwRecsSCND;
-        int usageThisDay = (int) ((double) (millisInDay / millisBetweenRecs) * usageBetweenRecs);
+        int usageThisDay = (int) ((double) (MILLISINADAY / millisBetweenRecs) * usageBetweenRecs);
 
         return usageThisDay;
     }
 
 	public int getRecording(int i, String string) {
 		String iS = Integer.valueOf(i).toString();
-		return recordings.getInt(iS+string+getCurrentUser(), -1);
+		return recordings.getInt(iS+string+getCurrentUser(), HASNOTBEENRECORDED);
 	}
 
 	public boolean everyOptionIsSet() {
-		return settings.getInt("Woonsituatie"+getCurrentUser(), -1) == -1 
-				|| settings.getInt("Inwoneraantal"+getCurrentUser(), -1) == -1
-                || settings.getInt("Metersoort"+getCurrentUser(), -1) == -1;
+		return settings.contains("Woonsituatie") 
+				|| settings.contains("Inwoneraantal")
+                || settings.contains("Metersoort");
 	}
 
 	public void recordSettings(RadioGroup groupWoonSit, RadioGroup groupInw, RadioGroup groupMeetS) {
@@ -283,7 +287,7 @@ public class StandData {
 	}
 
 	public int getSettingSelection(String string) {
-		return settings.getInt(string+getCurrentUser(), -1);
+		return settings.getInt(string+getCurrentUser(), HASNOTBEENRECORDED);
 	}
 	
 	/**
@@ -291,8 +295,8 @@ public class StandData {
 	 * If no recording has been made yet, the current user is 1.
 	 */
 	public int getCurrentUser() {
-		int userSetting = settings.getInt( "User", 0 );
-		if ( userSetting == 0 ) {
+		int userSetting = settings.getInt( "User", HASNOTBEENRECORDED );
+		if ( userSetting == HASNOTBEENRECORDED ) {
 			return 1;
 		}
 		else return userSetting;

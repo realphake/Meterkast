@@ -21,7 +21,13 @@ import java.util.List;
  * @author Arjen Swellengrebel
  */
 public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
-    private File fileName; // The path to the picture we're working with
+    private static final int SHADESOFGREY = 256;
+
+	private static final int FULLWHITE = 255;
+
+	private static final int SAMPLESIZE = 8;
+
+	private File fileName; // The path to the picture we're working with
 
     // The picture and the view it should be printed to
     private Bitmap bitmap = null;
@@ -84,7 +90,7 @@ public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
 
                 try {
                     BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 8;
+                    options.inSampleSize = SAMPLESIZE;
                     this.bitmap = BitmapFactory.decodeFile(this.fileName.getAbsolutePath(), options);
                 } catch (OutOfMemoryError oomERR2) {
                     // oomERR2.printStackTrace();
@@ -266,7 +272,7 @@ public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
 
                 if (thiscolor != remembercolor) {
                     // This is a change in color, so I found an edge
-                    if (thiscolor == 255) { // Left bound found; this color is white, previous was black.
+                    if (thiscolor == FULLWHITE) { // Left bound found; this color is white, previous was black.
                         leftbounds.add(new Point(x, y));
                     } else { // Right boundary found.
                         rightbounds.add(new Point(x - 1, y));
@@ -528,8 +534,8 @@ public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
 
         if (value < 0) {
             v = 0;
-        } else if (value > 255) {
-            v = 255;
+        } else if (value > FULLWHITE) {
+            v = FULLWHITE;
         } else {
             v = value;
         }
@@ -547,7 +553,7 @@ public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
          */
         Bitmap numbers = Bitmap.createScaledBitmap(this.exampleNums, this.compareWidth * 10, this.compareHeight, false);
         Bitmap exampl;
-        int smallestDiff = this.compareWidth * this.compareHeight * 256;
+        int smallestDiff = this.compareWidth * this.compareHeight * SHADESOFGREY;
         int bestGuess = 0;
 
         for (int n : candidates) {

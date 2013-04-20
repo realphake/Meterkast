@@ -31,7 +31,8 @@ import java.io.File;
  * @author Arjen Swellengrebel
  */
 public class StandOpnameActivity extends Activity {
-    StandData data;
+    private static final int SAMPLESIZE = 8;
+	StandData data;
 	EditText editText1, editText2;
     ImageView imageView1;
     Beeldherkenning recognizer;
@@ -87,7 +88,7 @@ public class StandOpnameActivity extends Activity {
 
             try {
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
+                options.inSampleSize = SAMPLESIZE;
 
                 bitmap = BitmapFactory.decodeFile(currentRec.getAbsolutePath(), options);
             } catch (OutOfMemoryError oomERR2) {

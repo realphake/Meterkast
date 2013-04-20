@@ -32,7 +32,10 @@ import java.io.FileOutputStream;
  * @author Arjen Swellengrebel
  */
 public class Hoofdscherm extends Activity {
-    // Global variables.
+    private static final int QUALITY = 100;
+	private static final int HEIGHT = 480;
+	private static final int WIDTH = 640;
+	// Global variables.
     TextView textView1;
     ImageView imageView1;
 	StandData data;
@@ -87,22 +90,19 @@ public class Hoofdscherm extends Activity {
     }
 
     private void drawBarGraphs() {
-    	int width = 640;
-        int height = 480;
     	Bitmap graph = BitmapFactory.decodeResource(getResources(), R.drawable.grid);
-        graph = Bitmap.createScaledBitmap(graph, width, height, false);
+        graph = Bitmap.createScaledBitmap(graph, WIDTH, HEIGHT, false);
     	
-    	graph = data.drawBarGraphs(width, height, graph);
+    	graph = data.drawBarGraphs(WIDTH, HEIGHT, graph);
         this.imageView1.setImageBitmap(graph);
     }
 
     
 
     private void graphRecordings() {
-    	int width = 640, height = 480;
     	Bitmap graph = BitmapFactory.decodeResource(getResources(), R.drawable.grid);
-        graph = Bitmap.createScaledBitmap(graph, width, height, false);
-        graph = data.drawGraph(width, height, graph);
+        graph = Bitmap.createScaledBitmap(graph, WIDTH, HEIGHT, false);
+        graph = data.drawGraph(WIDTH, HEIGHT, graph);
 
         this.imageView1.setImageBitmap(graph);
     }
@@ -161,7 +161,7 @@ public class Hoofdscherm extends Activity {
             file.createNewFile();
 
             FileOutputStream ostream = new FileOutputStream(file);
-            bitmap.compress(CompressFormat.JPEG, 100, ostream);
+            bitmap.compress(CompressFormat.JPEG, QUALITY, ostream);
             ostream.close();
         } catch (Exception e) {
             e.printStackTrace();

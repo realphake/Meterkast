@@ -22,7 +22,9 @@ import java.util.TimerTask;
  * @author Arjen Swellengrebel
  */
 public class NotificationService extends Service {
-    @Override
+    private static final int MILLISINADAY = 1000 * 60 * 60 * 24;
+
+	@Override
     public IBinder onBind(Intent arg0) {
         return null;
     }
@@ -32,7 +34,7 @@ public class NotificationService extends Service {
         super.onCreate();
         Toast.makeText(this, R.string.make_note, Toast.LENGTH_LONG).show();
 
-        Date date = new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24));
+        Date date = new Date(System.currentTimeMillis() + MILLISINADAY);
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
                 @Override

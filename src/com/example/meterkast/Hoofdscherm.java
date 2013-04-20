@@ -38,7 +38,7 @@ public class Hoofdscherm extends Activity {
 	// Global variables.
     TextView textView1;
     ImageView imageView1;
-	StandData data;
+	RecordingData data;
 
     @Override
     /** This is called when the app starts.
@@ -49,7 +49,7 @@ public class Hoofdscherm extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoofdscherm);
 
-        this.data = new StandData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
+        this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
         
         this.textView1 = (TextView) findViewById(R.id.textView1);
         this.imageView1 = (ImageView) findViewById(R.id.imageView1);
@@ -120,7 +120,7 @@ public class Hoofdscherm extends Activity {
      * @param view
      */
     public void goToRecord(View view) {
-        Intent intentToRecord = new Intent(this, StandOpnameActivity.class);
+        Intent intentToRecord = new Intent(this, MakeRecordingActivity.class);
         startActivity(intentToRecord); // Opening the record screen.
     }
 

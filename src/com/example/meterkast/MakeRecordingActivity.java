@@ -30,21 +30,21 @@ import java.io.File;
  *
  * @author Arjen Swellengrebel
  */
-public class StandOpnameActivity extends Activity {
+public class MakeRecordingActivity extends Activity {
     private static final int SAMPLESIZE = 8;
-	StandData data;
+	RecordingData data;
 	EditText editText1, editText2;
     ImageView imageView1;
-    Beeldherkenning recognizer;
+    ImageRecognizer recognizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stand_opname);
         
-        this.data = new StandData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
+        this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
 
-        this.recognizer = new Beeldherkenning();
+        this.recognizer = new ImageRecognizer();
 
         // Initialize the textfield variables so they can be read/set.
         this.editText1 = (EditText) findViewById(R.id.editText1);
@@ -52,7 +52,7 @@ public class StandOpnameActivity extends Activity {
         this.imageView1 = (ImageView) findViewById(R.id.imageView1);
 
         // If you have selected single meters, don't show the second text window.
-        if (data.enkeleStand()) {
+        if (data.singleRecording()) {
             this.editText2.setVisibility(View.INVISIBLE); // Out of sight, but not out of mind. Never forget.
         }
 

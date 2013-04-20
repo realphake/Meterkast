@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.meterkast.StandOpnameActivity"
+            android:name="com.example.meterkast.MakeRecordingActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_stand_opname" >
         </activity>

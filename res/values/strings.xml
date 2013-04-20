@@ -9,6 +9,8 @@
     <string name="hello_world">Placeholder</string>
     <string name="make_note">Herinnering aangemaakt</string>
     
+    <string name="incomplete">Incompleet ingevuld!</string>
+    
     
     <string name="title_activity_stand_opname">Opnamescherm</string>
     <string name="title_activity_optie_menu">Optiescherm</string>
@@ -45,5 +47,10 @@
     
     <string name="welkom_bericht">Welkom! Er moeten eerst een paar opties worden geselecteerd.</string>
     <string name="ok_knop">OK</string>
+    
+    <string name="makerecording">Stand opnemen</string>
+    <string name="makerecordingimplore">Maak een nieuwe opname van de meterstand!</string>
+    
+    
 
 </resources>

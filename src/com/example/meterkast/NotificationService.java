@@ -52,8 +52,8 @@ public class NotificationService extends Service {
     public void makeNotification() {
         NotificationCompat.Builder bob = new NotificationCompat.Builder(this);
         bob.setSmallIcon(R.drawable.ic_launcher);
-        bob.setContentTitle("Stand opnemen");
-        bob.setContentText("Maak een nieuwe opname van de meterstand!");
+        bob.setContentTitle(getString(R.string.makerecording));
+        bob.setContentText(getString(R.string.makerecordingimplore));
 
         Notification note = bob.build();
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

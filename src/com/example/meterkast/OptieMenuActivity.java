@@ -14,10 +14,13 @@ import android.widget.RadioGroup;
  */
 public class OptieMenuActivity extends Activity {
     
-    StandData data;
-    RadioGroup groupWoonSit;
-    RadioGroup groupInw;
-    RadioGroup groupMeetS;
+    private static final String METERTYPE = "Metersoort";
+	private static final String NUMBEROCCUPANTS = "Inwoneraantal";
+	private static final String TYPEOFHOUSE = "Woonsituatie";
+	RecordingData data;
+    RadioGroup groupTypeHouse;
+    RadioGroup groupOccupants;
+    RadioGroup groupMeterType;
 
     @Override /** Do some basic things to create the screen. */
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +30,16 @@ public class OptieMenuActivity extends Activity {
         // Intent intent = getIntent(); // Only necessary when passing info.
 
         // Initialize the RadioGroup variables so they can be read/set.
-        this.groupWoonSit = (RadioGroup) findViewById(R.id.radioGroupWoonsituatie);
-        this.groupInw = (RadioGroup) findViewById(R.id.radioGroupInwoners);
-        this.groupMeetS = (RadioGroup) findViewById(R.id.radioGroupMeterSoort);
+        this.groupTypeHouse = (RadioGroup) findViewById(R.id.radioGroupWoonsituatie);
+        this.groupOccupants = (RadioGroup) findViewById(R.id.radioGroupInwoners);
+        this.groupMeterType = (RadioGroup) findViewById(R.id.radioGroupMeterSoort);
 
-        this.data = new StandData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
+        this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
         
         // Set the RadioGroups to the values recorded in the PersonalInfo file.
-        this.groupWoonSit.check(data.getSettingSelection("Woonsituatie"));
-        this.groupInw.check(data.getSettingSelection("Inwoneraantal"));
-        this.groupMeetS.check(data.getSettingSelection("Metersoort"));
+        this.groupTypeHouse.check(data.getSettingSelection(TYPEOFHOUSE));
+        this.groupOccupants.check(data.getSettingSelection(NUMBEROCCUPANTS));
+        this.groupMeterType.check(data.getSettingSelection(METERTYPE));
     }
 
     /**
@@ -58,7 +61,7 @@ public class OptieMenuActivity extends Activity {
      * @param view
      */
     public void saveSettings(View view) {
-        data.recordSettings(groupWoonSit, groupInw, groupMeetS);
+        data.recordSettings(groupTypeHouse, groupOccupants, groupMeterType);
         super.onBackPressed(); // After saving, close the window.
     }
 }

@@ -14,7 +14,10 @@ import android.os.Environment;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class StandData {
+public class RecordingData {
+	private static final String KINDOFMETER = "Metersoort";
+	private static final String NUMBEROFOCCUPANTS = "Inwoneraantal";
+	private static final String TYPEOFHOUSE = "Woonsituatie";
 	private static final int MILLISINADAY = 1000 * 60 * 60 * 24;
 	private static final int BOTTOMTEXTDISTANCE = 10;
 	private static final int TOPTEXTDISTANCE = 30;
@@ -24,13 +27,13 @@ public class StandData {
 	public SharedPreferences recordings;
 	public SharedPreferences settings;
 
-	public StandData(SharedPreferences s, SharedPreferences r) {
+	public RecordingData(SharedPreferences s, SharedPreferences r) {
 		settings = s; // Open settings file.
         recordings = r; // Open data storage file.
 	}
+	public boolean singleRecording() {
 	
-	public boolean enkeleStand() {
-		return settings.getInt("Metersoort"+getCurrentUser(), HASNOTBEENRECORDED) == R.id.radioEnkeleStand;
+		return settings.getInt(KINDOFMETER+getCurrentUser(), HASNOTBEENRECORDED) == R.id.radioEnkeleStand;
 	}
 	
 	/**
@@ -147,11 +150,11 @@ public class StandData {
         Integer recordNumber = Integer.valueOf(settings.getInt("nOfRecords"+getCurrentUser(), 0) + 1);
 
         /** Recordings will look like this:
-         * "3date" => 39485093218475 (milliseconds since epoch)
-         * "3frst" => 503341
-         * "3scnd" => 403215
+         * "3date1" => 39485093218475 (milliseconds since epoch)
+         * "3frst1" => 503341
+         * "3scnd1" => 403215
          *
-         * Picture filenames look like "/meterkast_foto/3pict.jpg"
+         * Picture filenames look like "/meterkast_foto/3pict1.jpg"
          */
 
         /** Record the first field, if available. */
@@ -166,7 +169,7 @@ public class StandData {
 
             /** Record the second field, if necessary. */
             if (!field2.equals("")
-                    && settings.getInt("Metersoort"+getCurrentUser(), HASNOTBEENRECORDED) == R.id.radioTweeStanden) {
+                    && settings.getInt(KINDOFMETER+getCurrentUser(), HASNOTBEENRECORDED) == R.id.radioTweeStanden) {
                 // Enter the recorded info into the "editor" (which is the file "MeterInfo.whatever").
                 editor.putInt(recordNumber.toString() + "scnd"+getCurrentUser(), Integer.parseInt(field2));
 
@@ -177,7 +180,7 @@ public class StandData {
             // We have to remember how many settings have been recorded now!
             editorSettings.putInt("nOfRecords"+getCurrentUser(), recordNumber.intValue());
         } else {
-            Toast.makeText(context, "Incompleet ingevuld!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.incomplete, Toast.LENGTH_SHORT).show();
         }
 
         editorSettings.commit();
@@ -268,9 +271,9 @@ public class StandData {
 	}
 
 	public boolean everyOptionIsSet() {
-		return settings.contains("Woonsituatie") 
-				|| settings.contains("Inwoneraantal")
-                || settings.contains("Metersoort");
+		return settings.contains(TYPEOFHOUSE) 
+				|| settings.contains(NUMBEROFOCCUPANTS)
+                || settings.contains(KINDOFMETER);
 	}
 
 	public void recordSettings(RadioGroup groupWoonSit, RadioGroup groupInw, RadioGroup groupMeetS) {
@@ -278,9 +281,9 @@ public class StandData {
         SharedPreferences.Editor editor = settings.edit();
 
         // And enter their selected values into the editor.
-        editor.putInt("Woonsituatie"+getCurrentUser(), groupWoonSit.getCheckedRadioButtonId());
-        editor.putInt("Inwoneraantal"+getCurrentUser(), groupInw.getCheckedRadioButtonId());
-        editor.putInt("Metersoort"+getCurrentUser(), groupMeetS.getCheckedRadioButtonId());
+        editor.putInt(TYPEOFHOUSE+getCurrentUser(), groupWoonSit.getCheckedRadioButtonId());
+        editor.putInt(NUMBEROFOCCUPANTS+getCurrentUser(), groupInw.getCheckedRadioButtonId());
+        editor.putInt(KINDOFMETER+getCurrentUser(), groupMeetS.getCheckedRadioButtonId());
 
         editor.commit(); // Commit the edits.
 		

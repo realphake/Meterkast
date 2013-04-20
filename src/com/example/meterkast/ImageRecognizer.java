@@ -20,8 +20,12 @@ import java.util.List;
 /**
  * @author Arjen Swellengrebel
  */
-public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
-    private static final int SHADESOFGREY = 256;
+public class ImageRecognizer extends AsyncTask<Object, Object, Object> {
+    private static final int ROTATERIGHT = 90;
+
+	private static final int ROTATELEFT = 90;
+
+	private static final int SHADESOFGREY = 256;
 
 	private static final int FULLWHITE = 255;
 
@@ -229,7 +233,7 @@ public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
         result = blurHorizontal(result, radius / 4, left, top, right, bottom, skiplines);
 
         Matrix matrix = new Matrix();
-        matrix.postRotate(90);
+        matrix.postRotate(ROTATERIGHT);
         result = Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
 
         result = blurHorizontal(result, radius / 8, result.getWidth() - bottom, left, result.getWidth() - top, right, skiplines);
@@ -237,7 +241,7 @@ public class Beeldherkenning extends AsyncTask<Object, Object, Object> {
         result = blurHorizontal(result, radius / 4, result.getWidth() - bottom, left, result.getWidth() - top, right, skiplines);
 
         matrix = new Matrix();
-        matrix.postRotate(-90);
+        matrix.postRotate(-ROTATELEFT);
         result = Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
 
         return result;

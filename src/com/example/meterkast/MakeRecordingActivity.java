@@ -35,7 +35,6 @@ public class MakeRecordingActivity extends Activity {
 	RecordingData data;
 	EditText editText1, editText2;
     ImageView imageView1;
-    ImageRecognizer recognizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class MakeRecordingActivity extends Activity {
         
         this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
 
-        this.recognizer = new ImageRecognizer();
+        
 
         // Initialize the textfield variables so they can be read/set.
         this.editText1 = (EditText) findViewById(R.id.editText1);
@@ -105,14 +104,6 @@ public class MakeRecordingActivity extends Activity {
             }
 
             this.imageView1.setImageBitmap(bitmap);
-        }
-
-        // If it exists, put the picture in currentRec in imageView1.
-        // Also, see if you can determine what numbers go in the boxes.
-        if (currentRec.exists()) {
-            // Set suggestions based on the imageRecognizer(TM) (Just kidding about the (TM)) (For now)
-            this.recognizer.execute(this.imageView1, this.editText1, this.editText2, currentRec,
-                BitmapFactory.decodeResource(getResources(), R.drawable.numbersonblackblur));
         }
     }
 

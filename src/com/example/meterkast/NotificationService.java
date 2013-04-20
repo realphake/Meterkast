@@ -1,7 +1,9 @@
 package com.example.meterkast;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 
 import android.content.Context;
@@ -13,9 +15,6 @@ import android.support.v4.app.NotificationCompat;
 
 import android.widget.Toast;
 
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -23,6 +22,7 @@ import java.util.TimerTask;
  */
 public class NotificationService extends Service {
     private static final int MILLISINADAY = 1000 * 60 * 60 * 24;
+    AlarmManager am;
 
 	@Override
     public IBinder onBind(Intent arg0) {
@@ -32,24 +32,20 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, R.string.make_note, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.make_note), Toast.LENGTH_LONG).show();
+        
+        am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        
+        Intent intent = new Intent(this, NotificationService.class);
+        PendingIntent makeNote = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        am.set(AlarmManager.RTC, System.currentTimeMillis() + MILLISINADAY, makeNote);
 
-        Date date = new Date(System.currentTimeMillis() + MILLISINADAY);
-        Timer timer = new Timer();
-        TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    makeNotification();
-                    stopSelf();
-                }
-            };
-        timer.schedule(timerTask, date);
     }
 
     /**
      * Pops up a note.
      */
-    public void makeNotification() {
+    public void onReceive() {
         NotificationCompat.Builder bob = new NotificationCompat.Builder(this);
         bob.setSmallIcon(R.drawable.ic_launcher);
         bob.setContentTitle(getString(R.string.makerecording));

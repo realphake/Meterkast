@@ -92,8 +92,12 @@ public class MainScreen extends Activity {
 
         // Then add the following functions to that code:
         showCurrentUser();
-        drawBarGraphs(); // Look at the functions to see what they do
-        graphRecordings();
+        
+        if ( data.getSettingSelection("nOfRecords") >= 2 ) {
+        	drawBarGraphs(); // Look at the functions to see what they do
+            graphRecordings();
+        }
+        
     }
 
     // Draws a graph of the electricity usage over time. 

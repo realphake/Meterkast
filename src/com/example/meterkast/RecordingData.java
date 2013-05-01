@@ -5,7 +5,6 @@ import java.io.File;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 

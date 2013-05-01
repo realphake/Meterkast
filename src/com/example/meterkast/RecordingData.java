@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class RecordingData {
 	static final int HIGHESTPOSSIBLERECORDING = 999999 * 2;
 
 	private static final int HASNOTBEENRECORDED = -1;
+	private static final int DEFAULTSTOZERO = 0;
 	public SharedPreferences recordings;
 	public SharedPreferences settings;
 
@@ -41,7 +43,7 @@ public class RecordingData {
     File getRelevantPhotoPath() {
         // Create a file in the following steps:
         // Determine the filename for this one, such as "3pict.jpg" (where 3 is the number of the next (this) recording)
-        String numPict = Integer.valueOf(getSettingSelection("nOfRecords") + 2).toString() + "pict"+getCurrentUser()+".jpg";
+        String numPict = Integer.valueOf(getNOfRecords() + 2).toString() + "pict"+getCurrentUser()+".jpg";
 
         // Create the directory like "/sdcard/meterkast_foto/" if it doesn't exist yet
         new File(Environment.getExternalStorageDirectory() + "/meterkast_foto/").mkdirs();
@@ -51,6 +53,10 @@ public class RecordingData {
 
         return fullPath; // Return that.
     }
+
+	private int getNOfRecords() {
+		return settings.getInt("nOfRecords"+getCurrentUser(), DEFAULTSTOZERO);
+	}
     
     public long getDate(int i) {
     	// Returns the date on which the i-th recording was made. 
@@ -65,7 +71,7 @@ public class RecordingData {
         SharedPreferences.Editor editorSettings = settings.edit();
 
         // Counting the recordings, we need the next one so + 1
-        Integer recordNumber = Integer.valueOf(getSettingSelection("nOfRecords") + 1);
+        Integer recordNumber = Integer.valueOf(getNOfRecords() + 1);
 
         /** Recordings will look like this:
          * "3date1" => 39485093218475 (milliseconds since epoch)
@@ -109,7 +115,7 @@ public class RecordingData {
 	 * Get the last date that has been recorded (ie the newest.)
 	 */
 	public long getEndDate() {
-		int noRecs = getSettingSelection("nOfRecords");
+		int noRecs = getNOfRecords();
 		return getDate(Integer.valueOf(noRecs));
 	}
 
@@ -119,7 +125,7 @@ public class RecordingData {
 	 * Find out how much electricity has been used between two moments.
 	 */
 	int thisDaysUsage(long morning, long evening) {
-        int noRecs = getSettingSelection("nOfRecords");
+        int noRecs = getNOfRecords();
         long thisDate;
         int beforeMorning = 0; // These will be set later
         int afterEvening = 0;
@@ -186,20 +192,23 @@ public class RecordingData {
 		return settings.getInt(string+getCurrentUser(), HASNOTBEENRECORDED);
 	}
 	
+	
+	
 	/**
-	 * The app can take two different users. The one is denoted as 1, the other as -1.
-	 * If no recording has been made yet, the current user is 1.
+	 * The app can take two different users. The one is denoted as 2, the other as -2.
+	 * If no recording has been made yet, the current user is 2.
+	 * I use the number 2 because -1 is the "unset" value.
 	 */
 	public int getCurrentUser() {
 		// Get the user
 		int userSetting = settings.getInt( "User", HASNOTBEENRECORDED );
-		if ( userSetting == HASNOTBEENRECORDED ) { // if couldn't find, say it's user 1
-			return 1;
+		if ( userSetting == HASNOTBEENRECORDED ) { // if couldn't find, say it's user 2
+			return 2;
 		}
 		else return userSetting; // Else just say which user it is.
 	}
 
-	public void switchUser() { // Set the user as -1 if it's 1, and the other way around.
+	public void switchUser() { // Set the user as -2 if it's 2, and the other way around.
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putInt( "User", -getCurrentUser() ); // Just the opposite, which is why I chose those numbers.
 		editor.commit();

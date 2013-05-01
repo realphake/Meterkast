@@ -37,11 +37,19 @@ public class OptieMenuActivity extends Activity {
 
         this.data = new RecordingData(getSharedPreferences("PersonalInfo", MODE_PRIVATE), getSharedPreferences("MeterInfo", MODE_PRIVATE));
         
-        // Set the RadioGroups to the values recorded in the PersonalInfo file.
+        setRadioGroups();
+    }
+
+
+
+	private void setRadioGroups() {
+		// Set the RadioGroups to the values recorded in the PersonalInfo file.
         this.groupTypeHouse.check(data.getSettingSelection(TYPEOFHOUSE));
         this.groupOccupants.check(data.getSettingSelection(NUMBEROCCUPANTS));
         this.groupMeterType.check(data.getSettingSelection(METERTYPE));
-    }
+	}
+    
+    
 
     /**
      * Go back to the main screen
@@ -54,6 +62,7 @@ public class OptieMenuActivity extends Activity {
     
     public void switchUser(View view) {
     	data.switchUser(); // Just refers to the data Object! Which is useful! Look there for the code.
+    	setRadioGroups();
     }
 
     /**

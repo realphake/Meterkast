@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.ImageView;
@@ -62,7 +63,8 @@ public class MainScreen extends Activity {
         this.imageView1 = (ImageView) findViewById(R.id.imageView1);
 
         // See if all settings have been recorded.
-        if (data.everyOptionIsSet()) {
+        if (!data.everyOptionIsSet()) {
+        	Log.d("options","inside the loop");
             // Show a message saying we need to change some settings first.
             AlertDialog ad = new AlertDialog.Builder(this).create();
 
@@ -93,10 +95,8 @@ public class MainScreen extends Activity {
         // Then add the following functions to that code:
         showCurrentUser();
         
-        if ( data.getSettingSelection("nOfRecords") >= 2 ) {
-        	drawBarGraphs(); // Look at the functions to see what they do
-            graphRecordings();
-        }
+        graphRecordings();
+        
         
     }
 

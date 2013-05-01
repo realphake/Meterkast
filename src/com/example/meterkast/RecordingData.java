@@ -162,9 +162,9 @@ public class RecordingData {
 	}
 
 	public boolean everyOptionIsSet() { // Is every option in the options-menu actually set?
-		return settings.contains(TYPEOFHOUSE) 
-				|| settings.contains(NUMBEROFOCCUPANTS)
-                || settings.contains(KINDOFMETER);
+		return settings.getInt(TYPEOFHOUSE+getCurrentUser(),-1) != -1
+				&& settings.getInt(NUMBEROFOCCUPANTS+getCurrentUser(),-1) != -1
+                && settings.getInt(KINDOFMETER+getCurrentUser(),-1) != -1;
 	}
 
 	public void recordSettings(RadioGroup groupWoonSit, RadioGroup groupInw, RadioGroup groupMeetS) {
@@ -172,6 +172,7 @@ public class RecordingData {
         SharedPreferences.Editor editor = settings.edit();
 
         // And enter their selected values into the editor.
+        
         editor.putInt(TYPEOFHOUSE+getCurrentUser(), groupWoonSit.getCheckedRadioButtonId());
         editor.putInt(NUMBEROFOCCUPANTS+getCurrentUser(), groupInw.getCheckedRadioButtonId());
         editor.putInt(KINDOFMETER+getCurrentUser(), groupMeetS.getCheckedRadioButtonId());
